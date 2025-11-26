@@ -1,0 +1,97 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Calculadora Simple</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="calculator-container">
+    <!-- Display -->
+    <div class="display-container">
+      <div class="display">{{ display }}</div>
+    </div>
+
+    <!-- Botones -->
+    <ion-grid class="buttons-grid">
+      <!-- Fila 1: C, CE, %, División -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="clearAll()" class="btn-clear">C</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="clearEntry()" class="btn-clear">CE</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="percentage()" class="btn-function">%</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="setOperator('÷')" class="btn-operator">÷</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- Fila 2: 7, 8, 9, Multiplicación -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('7')" class="btn-number">7</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('8')" class="btn-number">8</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('9')" class="btn-number">9</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="setOperator('×')" class="btn-operator">×</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- Fila 3: 4, 5, 6, Resta -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('4')" class="btn-number">4</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('5')" class="btn-number">5</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('6')" class="btn-number">6</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="setOperator('-')" class="btn-operator">-</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- Fila 4: 1, 2, 3, Suma -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('1')" class="btn-number">1</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('2')" class="btn-number">2</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('3')" class="btn-number">3</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="setOperator('+')" class="btn-operator">+</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- Fila 5: +/-, 0, ., = -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="toggleSign()" class="btn-function">+/-</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addNumber('0')" class="btn-number">0</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="addDecimal()" class="btn-function">.</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="calculate()" class="btn-equals">=</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
