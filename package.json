@@ -1,6 +1,6 @@
 {
-  "name": "calculadorasimple",
-  "version": "0.0.1",
+  "name": "caculadora-simple",
+  "version": "2.0.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -9,7 +9,11 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "sync:all": "node scripts/sync-all.js",
+    "cap:sync": "npm run sync:all && npx cap sync",
+    "cap:build": "npm run sync:all && npx cap build",
+    "fix:config": "npm run sync:all"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +46,7 @@
     "@angular/cli": "^20.0.0",
     "@angular/compiler-cli": "^20.0.0",
     "@angular/language-service": "^20.0.0",
+    "@capacitor/android": "^7.4.4",
     "@capacitor/cli": "7.4.4",
     "@ionic/angular-toolkit": "^12.0.0",
     "@types/jasmine": "~5.1.0",

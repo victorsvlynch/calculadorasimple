@@ -1,0 +1,25 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1A73E8"></stop>
+      <stop offset="100%" stop-color="#0D47A1"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#grad)"></rect>
+  <!-- Body of calculator -->
+  <rect x="262" y="200" width="500" height="650" rx="60" fill="#FFFFFF" opacity="0.9"></rect>
+  <!-- Display -->
+  <rect x="310" y="250" width="400" height="150" rx="30" fill="#E8F0FE"></rect>
+  <!-- Buttons -->
+  <circle cx="370" cy="470" r="55" fill="#4285F4"></circle>
+  <circle cx="512" cy="470" r="55" fill="#4285F4"></circle>
+  <circle cx="654" cy="470" r="55" fill="#4285F4"></circle>
+
+  <circle cx="370" cy="600" r="55" fill="#4285F4"></circle>
+  <circle cx="512" cy="600" r="55" fill="#4285F4"></circle>
+  <circle cx="654" cy="600" r="55" fill="#4285F4"></circle>
+
+  <circle cx="370" cy="730" r="55" fill="#4285F4"></circle>
+  <circle cx="512" cy="730" r="55" fill="#4285F4"></circle>
+  <rect x="604" y="675" width="110" height="160" rx="35" fill="#34A853"></rect>
+</svg>

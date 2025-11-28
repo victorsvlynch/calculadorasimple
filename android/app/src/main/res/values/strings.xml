@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Caculadora Simple</string>
+    <string name="title_activity_main">calculadorasimple</string>
+    <string name="package_name">com.victorsvlynch.calculadorasimple</string>
+    <string name="custom_url_scheme">com.victorsvlynch.calculadorasimple</string>
+</resources>
