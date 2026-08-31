@@ -3,20 +3,19 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   // INFORMACIÓN BÁSICA (OBLIGATORIA)
   appId: 'com.victorsvlynch.calculadorasimple',
-  appName: 'Caculadora Simple',
+  appName: 'Calculadora Simple', // CORREGIDO: faltaba la 'l'
   webDir: 'www',
-  version: '2.0.0',
-  
+  version: '2.1.0', // NUEVA VERSIÓN
+
   // CONFIGURACIÓN ANDROID
   android: {
     buildOptions: {
       keystorePath: '../calculadorasimple.keystore',
-      keystorePassword: 'calender17x',
+      keystorePassword: 'calender17x', // Nota: Ten cuidado compartiendo contraseñas en código
       keystoreAlias: 'calculadorasimple',
       keystoreAliasPassword: 'calender17x'
     }
   },
-  
 };
 
 export default config;

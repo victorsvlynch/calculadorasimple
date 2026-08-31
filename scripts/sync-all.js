@@ -15,7 +15,7 @@ if (!fs.existsSync(capacitorConfigPath)) {
 
 let capacitorContent = fs.readFileSync(capacitorConfigPath, 'utf8');
 
-// Extraer configuración con regex mejorado
+// Extraer configuración
 const config = {
   appId: extractValue(capacitorContent, 'appId'),
   appName: extractValue(capacitorContent, 'appName'),
@@ -27,13 +27,17 @@ if (!config.appId || !config.appName) {
   process.exit(1);
 }
 
+// 🚀 NUEVO: Generar versionCode automáticamente basado en la versión
+config.versionCode = generateVersionCode(config.version);
+
 console.log('   ✅ Configuración detectada:');
 console.log(`      - App ID: ${config.appId}`);
 console.log(`      - App Name: ${config.appName}`);
-console.log(`      - Version: ${config.version}`);
+console.log(`      - Version Name: ${config.version}`);
+console.log(`      - Version Code: ${config.versionCode} (Generado auto)`);
 
 // 2. SINCRONIZAR PACKAGE.JSON
-console.log('2. 📦 Sincronizando package.json...');
+console.log('\n2. 📦 Sincronizando package.json...');
 const packageJsonPath = path.join(__dirname, '../package.json');
 if (fs.existsSync(packageJsonPath)) {
   const packageData = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
@@ -51,25 +55,36 @@ if (fs.existsSync(packageJsonPath)) {
 }
 
 // 3. SINCRONIZAR ANDROID
-console.log('3. 🤖 Sincronizando plataforma Android...');
+console.log('\n3. 🤖 Sincronizando plataforma Android...');
 syncAndroidPlatform(config);
 
 // 4. SINCRONIZAR IOS
-console.log('4. 🍎 Sincronizando plataforma iOS...');
+console.log('\n4. 🍎 Sincronizando plataforma iOS...');
 syncIosPlatform(config);
 
 // 5. SINCRONIZAR CONFIG.XML (Cordova)
-console.log('5. 📱 Sincronizando config.xml...');
+console.log('\n5. 📱 Sincronizando config.xml...');
 syncConfigXml(config);
 
 console.log('\n🎉 ¡Sincronización completada!');
 console.log('📋 Todos los archivos derivan de capacitor.config.ts');
-console.log('💡 Modifica capacitor.config.ts y ejecuta: npm run sync:all');
+console.log('💡 Modifica capacitor.config.ts y ejecuta: npm run sync:all\n');
 
 // ===== FUNCIONES AUXILIARES =====
+
 function extractValue(content, key) {
   const match = content.match(new RegExp(`${key}:\\s*['"]([^'"]+)['"]`));
   return match ? match[1] : null;
+}
+
+// 🚀 NUEVA FUNCIÓN: Convierte "2.1.0" en 20100
+function generateVersionCode(versionString) {
+  const parts = versionString.split('.').map(num => parseInt(num) || 0);
+  const major = parts[0] || 0;
+  const minor = parts[1] || 0;
+  const patch = parts[2] || 0;
+  
+  return (major * 10000) + (minor * 100) + patch;
 }
 
 function syncAndroidPlatform(config) {
@@ -86,9 +101,11 @@ function syncAndroidPlatform(config) {
       
       switch (name) {
         case 'buildGradle':
-          content = content.replace(/namespace ".*"/, `namespace "${config.appId}"`);
-          content = content.replace(/applicationId ".*"/, `applicationId "${config.appId}"`);
-          content = content.replace(/versionName "[^"]*"/, `versionName "${config.version}"`);
+          // 🚀 SE MEJORARON LAS EXPRESIONES REGULARES PARA INCLUIR VERSIONCODE
+          content = content.replace(/namespace\s+"[^"]*"/, `namespace "${config.appId}"`);
+          content = content.replace(/applicationId\s+"[^"]*"/, `applicationId "${config.appId}"`);
+          content = content.replace(/versionCode\s+\d+/, `versionCode ${config.versionCode}`);
+          content = content.replace(/versionName\s+"[^"]*"/, `versionName "${config.version}"`);
           break;
           
         case 'androidManifest':
@@ -112,10 +129,6 @@ function syncIosPlatform(config) {
   const pbxprojPath = path.join(__dirname, '../ios/App/App.xcodeproj/project.pbxproj');
   if (fs.existsSync(pbxprojPath)) {
     console.log('   ✅ iOS detectado (actualización manual requerida para Xcode)');
-    console.log('   💡 Abre Xcode y actualiza:');
-    console.log(`      - Bundle Identifier: ${config.appId}`);
-    console.log(`      - Display Name: ${config.appName}`);
-    console.log(`      - Version: ${config.version}`);
   }
 }
 

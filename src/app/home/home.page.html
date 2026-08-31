@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Calculadora Simple - Facil de Usar</ion-title>
+    <ion-title>Calculadora Simple</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,13 +13,13 @@
 
     <!-- Botones -->
     <ion-grid class="buttons-grid">
-      <!-- Fila 1: C, CE, %, División -->
+      <!-- Fila 1: AC, Borrar, %, División -->
       <ion-row>
         <ion-col>
-          <ion-button expand="block" (click)="clearAll()" class="btn-clear">C</ion-button>
+          <ion-button expand="block" (click)="clearAll()" class="btn-clear">AC</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button expand="block" (click)="clearEntry()" class="btn-clear">CE</ion-button>
+          <ion-button expand="block" (click)="backspace()" class="btn-clear">⌫</ion-button>
         </ion-col>
         <ion-col>
           <ion-button expand="block" (click)="percentage()" class="btn-function">%</ion-button>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { 
   IonContent, 
   IonHeader, 
@@ -37,13 +38,21 @@ export class HomePage {
 
   constructor() {}
 
-  // Agregar número al display
+  // Disparar vibración táctil
+  async hapticFeedback() {
+    try {
+      await Haptics.impact({ style: ImpactStyle.Light });
+    } catch (e) {
+      // Ignorar error si se corre en web
+    }
+  }
+
   addNumber(num: string) {
+    this.hapticFeedback();
     if (this.waitingForNewInput) {
       this.display = num;
       this.waitingForNewInput = false;
     } else {
-      // Evitar múltiples ceros a la izquierda
       if (this.display === '0' && num !== '.') {
         this.display = num;
       } else {
@@ -52,8 +61,8 @@ export class HomePage {
     }
   }
 
-  // Agregar punto decimal
   addDecimal() {
+    this.hapticFeedback();
     if (this.waitingForNewInput) {
       this.display = '0.';
       this.waitingForNewInput = false;
@@ -62,10 +71,10 @@ export class HomePage {
     }
   }
 
-  // Establecer operador (+, -, ×, ÷)
   setOperator(op: string) {
+    this.hapticFeedback();
     if (this.operator && !this.waitingForNewInput) {
-      this.calculate();
+      this.calculate(false); // calcular sin vibrar de nuevo
     }
 
     this.operator = op;
@@ -73,8 +82,9 @@ export class HomePage {
     this.waitingForNewInput = true;
   }
 
-  // Calcular resultado
-  calculate() {
+  calculate(withHaptic = true) {
+    if (withHaptic) this.hapticFeedback();
+    
     if (this.previousInput && this.operator && !this.waitingForNewInput) {
       const prev = parseFloat(this.previousInput);
       const current = parseFloat(this.display);
@@ -88,15 +98,9 @@ export class HomePage {
       let result: number;
 
       switch (this.operator) {
-        case '+':
-          result = prev + current;
-          break;
-        case '-':
-          result = prev - current;
-          break;
-        case '×':
-          result = prev * current;
-          break;
+        case '+': result = prev + current; break;
+        case '-': result = prev - current; break;
+        case '×': result = prev * current; break;
         case '÷':
           if (current === 0) {
             this.display = 'Error';
@@ -105,11 +109,9 @@ export class HomePage {
           }
           result = prev / current;
           break;
-        default:
-          return;
+        default: return;
       }
 
-      // Formatear el resultado
       this.display = this.formatResult(result);
       this.operator = '';
       this.previousInput = '';
@@ -117,20 +119,16 @@ export class HomePage {
     }
   }
 
-  // Formatear el resultado para evitar decimales largos
   private formatResult(result: number): string {
-    // Si es un número entero, mostrar sin decimales
     if (Number.isInteger(result)) {
       return result.toString();
     }
-    
-    // Si tiene decimales, limitar a 8 decimales y quitar ceros sobrantes
     const formatted = result.toFixed(8);
     return formatted.replace(/\.?0+$/, '');
   }
 
-  // Calcular porcentaje
   percentage() {
+    this.hapticFeedback();
     const value = parseFloat(this.display);
     if (!isNaN(value)) {
       this.display = (value / 100).toString();
@@ -138,16 +136,16 @@ export class HomePage {
     }
   }
 
-  // Cambiar signo (+/-)
   toggleSign() {
+    this.hapticFeedback();
     const value = parseFloat(this.display);
     if (!isNaN(value)) {
       this.display = (value * -1).toString();
     }
   }
 
-  // Limpiar todo (C)
   clearAll() {
+    this.hapticFeedback();
     this.display = '0';
     this.currentInput = '';
     this.previousInput = '';
@@ -155,18 +153,10 @@ export class HomePage {
     this.waitingForNewInput = true;
   }
 
-  // Limpiar entrada actual (CE)
-  clearEntry() {
-    this.display = '0';
-    this.waitingForNewInput = true;
-  }
-
-  // Función de backspace (eliminar último carácter)
   backspace() {
+    this.hapticFeedback();
     if (!this.waitingForNewInput && this.display.length > 1) {
       this.display = this.display.slice(0, -1);
-      
-      // Si después de borrar queda vacío, mostrar 0
       if (this.display === '' || this.display === '-') {
         this.display = '0';
         this.waitingForNewInput = true;
