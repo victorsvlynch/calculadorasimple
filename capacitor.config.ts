@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appId: 'com.victorsvlynch.calculadorasimple',
   appName: 'Calculadora Simple', // CORREGIDO: faltaba la 'l'
   webDir: 'www',
-  version: '2.1.0', // NUEVA VERSIÓN
+  version: '2.1.1', // NUEVA VERSIÓN
 
   // CONFIGURACIÓN ANDROID
   android: {
